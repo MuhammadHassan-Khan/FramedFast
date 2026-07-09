@@ -36,3 +36,28 @@ export type AdminLoginInput = z.infer<typeof adminLoginSchema>;
 export const adminQuerySchema = z.object({
   range: z.enum(["7d", "30d", "90d", "1y", "all"]).optional().default("30d"),
 });
+
+export const tokenOnlySchema = z.object({
+  token: z.string().optional(),
+});
+
+export const datesSchema = z.object({
+  dates: z.array(z.string()),
+});
+
+export const closeDaySchema = z.object({
+  token: z.string().optional(),
+  date: z.string().min(1),
+});
+
+export const bulkStatusSchema = z.object({
+  token: z.string().optional(),
+  dates: z.array(z.string()).min(1),
+  isOpen: z.boolean(),
+});
+
+export const monthAvailabilitySchema = z.object({
+  token: z.string().optional(),
+  year: z.number().int(),
+  month: z.number().int().min(0).max(11),
+});

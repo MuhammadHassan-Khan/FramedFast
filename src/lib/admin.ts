@@ -1,13 +1,10 @@
 import { createServerFn } from "@tanstack/react-start";
 import { supabaseAdmin } from "./supabase";
 import { verifyAdminToken, requireRole } from "./supabase-auth";
-
-function adminValidator(d: unknown) {
-  return d as { token?: string };
-}
+import { tokenOnlySchema } from "./validations";
 
 export const getDashboardKPIs = createServerFn({ method: "POST" })
-  .validator(adminValidator)
+  .validator((d: unknown) => tokenOnlySchema.parse(d))
   .handler(async (ctx) => {
     const { token } = ctx.data;
     const verified = await verifyAdminToken(token);
@@ -71,7 +68,7 @@ export const getDashboardKPIs = createServerFn({ method: "POST" })
   });
 
 export const getRevenueSeries = createServerFn({ method: "POST" })
-  .validator(adminValidator)
+  .validator(tokenOnlySchema.parse)
   .handler(async (ctx) => {
     const { token } = ctx.data;
     const verified = await verifyAdminToken(token);
@@ -103,7 +100,7 @@ export const getRevenueSeries = createServerFn({ method: "POST" })
   });
 
 export const getMonthlyRevenue = createServerFn({ method: "POST" })
-  .validator(adminValidator)
+  .validator(tokenOnlySchema.parse)
   .handler(async (ctx) => {
     const { token } = ctx.data;
     const verified = await verifyAdminToken(token);
@@ -141,7 +138,7 @@ export const getMonthlyRevenue = createServerFn({ method: "POST" })
   });
 
 export const getRecentTransactions = createServerFn({ method: "POST" })
-  .validator(adminValidator)
+  .validator(tokenOnlySchema.parse)
   .handler(async (ctx) => {
     const { token } = ctx.data;
     const verified = await verifyAdminToken(token);
@@ -176,7 +173,7 @@ export const getRecentTransactions = createServerFn({ method: "POST" })
   });
 
 export const getSalesFunnel = createServerFn({ method: "POST" })
-  .validator(adminValidator)
+  .validator(tokenOnlySchema.parse)
   .handler(async (ctx) => {
     const { token } = ctx.data;
     const verified = await verifyAdminToken(token);
@@ -214,7 +211,7 @@ export const getSalesFunnel = createServerFn({ method: "POST" })
   });
 
 export const getLeadsData = createServerFn({ method: "POST" })
-  .validator(adminValidator)
+  .validator(tokenOnlySchema.parse)
   .handler(async (ctx) => {
     const { token } = ctx.data;
     const verified = await verifyAdminToken(token);
@@ -232,7 +229,7 @@ export const getLeadsData = createServerFn({ method: "POST" })
   });
 
 export const getBookingsList = createServerFn({ method: "POST" })
-  .validator(adminValidator)
+  .validator(tokenOnlySchema.parse)
   .handler(async (ctx) => {
     const { token } = ctx.data;
     const verified = await verifyAdminToken(token);
@@ -248,7 +245,7 @@ export const getBookingsList = createServerFn({ method: "POST" })
   });
 
 export const getPaymentMethods = createServerFn({ method: "POST" })
-  .validator(adminValidator)
+  .validator(tokenOnlySchema.parse)
   .handler(async (ctx) => {
     const { token } = ctx.data;
     const verified = await verifyAdminToken(token);
@@ -273,7 +270,7 @@ export const getPaymentMethods = createServerFn({ method: "POST" })
   });
 
 export const getCustomerGrowth = createServerFn({ method: "POST" })
-  .validator(adminValidator)
+  .validator(tokenOnlySchema.parse)
   .handler(async (ctx) => {
     const { token } = ctx.data;
     const verified = await verifyAdminToken(token);
@@ -312,7 +309,7 @@ export const getCustomerGrowth = createServerFn({ method: "POST" })
   });
 
 export const getTeamPerformance = createServerFn({ method: "POST" })
-  .validator(adminValidator)
+  .validator(tokenOnlySchema.parse)
   .handler(async (ctx) => {
     const { token } = ctx.data;
     const verified = await verifyAdminToken(token);
@@ -349,7 +346,7 @@ export const getTeamPerformance = createServerFn({ method: "POST" })
   });
 
 export const getOrderStats = createServerFn({ method: "POST" })
-  .validator(adminValidator)
+  .validator(tokenOnlySchema.parse)
   .handler(async (ctx) => {
     const { token } = ctx.data;
     const verified = await verifyAdminToken(token);
@@ -368,7 +365,7 @@ export const getOrderStats = createServerFn({ method: "POST" })
   });
 
 export const getTopProducts = createServerFn({ method: "POST" })
-  .validator(adminValidator)
+  .validator(tokenOnlySchema.parse)
   .handler(async (ctx) => {
     const { token } = ctx.data;
     const verified = await verifyAdminToken(token);
@@ -414,7 +411,7 @@ function timeAgo(dateStr: string) {
 }
 
 export const getRecentActivity = createServerFn({ method: "POST" })
-  .validator(adminValidator)
+  .validator(tokenOnlySchema.parse)
   .handler(async (ctx) => {
     const { token } = ctx.data;
     const verified = await verifyAdminToken(token);

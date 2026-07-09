@@ -88,7 +88,7 @@ export const createBooking = createServerFn({ method: "POST" })
       .single();
 
     if (error) {
-      console.error("Supabase booking insert error:", error);
+      console.error("Booking insert failed:", error.message);
       return { error: "Something went wrong. Please try again." };
     }
 

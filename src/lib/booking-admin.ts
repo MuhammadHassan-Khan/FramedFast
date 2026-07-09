@@ -1,10 +1,13 @@
 import { createServerFn } from "@tanstack/react-start";
 import { supabaseAdmin } from "./supabase";
 import { verifyAdminToken, requireRole } from "./supabase-auth";
-
-function adminValidator(d: unknown) {
-  return d as { token?: string };
-}
+import {
+  datesSchema,
+  closeDaySchema,
+  bulkStatusSchema,
+  monthAvailabilitySchema,
+  tokenOnlySchema,
+} from "./validations";
 
 function startOfMonth(year: number, month: number) {
   return new Date(year, month, 1);
@@ -35,7 +38,7 @@ export type DayAvailability = {
 };
 
 export const getMonthAvailability = createServerFn({ method: "POST" })
-  .validator((d: unknown) => d as { token?: string; year: number; month: number })
+  .validator((d: unknown) => monthAvailabilitySchema.parse(d))
   .handler(async (ctx) => {
     const { token, year, month } = ctx.data;
     const verified = await verifyAdminToken(token);
@@ -91,7 +94,7 @@ export const getMonthAvailability = createServerFn({ method: "POST" })
   });
 
 export const closeDay = createServerFn({ method: "POST" })
-  .validator((d: unknown) => d as { token?: string; date: string })
+  .validator((d: unknown) => closeDaySchema.parse(d))
   .handler(async (ctx) => {
     const { token, date } = ctx.data;
     const verified = await verifyAdminToken(token);
@@ -109,7 +112,7 @@ export const closeDay = createServerFn({ method: "POST" })
   });
 
 export const openDay = createServerFn({ method: "POST" })
-  .validator((d: unknown) => d as { token?: string; date: string })
+  .validator((d: unknown) => closeDaySchema.parse(d))
   .handler(async (ctx) => {
     const { token, date } = ctx.data;
     const verified = await verifyAdminToken(token);
@@ -125,7 +128,7 @@ export const openDay = createServerFn({ method: "POST" })
   });
 
 export const setBulkStatus = createServerFn({ method: "POST" })
-  .validator((d: unknown) => d as { token?: string; dates: string[]; isOpen: boolean })
+  .validator((d: unknown) => bulkStatusSchema.parse(d))
   .handler(async (ctx) => {
     const { token, dates, isOpen } = ctx.data;
     const verified = await verifyAdminToken(token);
@@ -154,7 +157,7 @@ export const setBulkStatus = createServerFn({ method: "POST" })
   });
 
 export const checkDatesOpen = createServerFn({ method: "POST" })
-  .validator((d: unknown) => d as { dates: string[] })
+  .validator((d: unknown) => datesSchema.parse(d))
   .handler(async (ctx) => {
     const { dates } = ctx.data;
 
@@ -173,7 +176,7 @@ export const checkDatesOpen = createServerFn({ method: "POST" })
   });
 
 export const getBookedSlots = createServerFn({ method: "POST" })
-  .validator((d: unknown) => d as { dates: string[] })
+  .validator((d: unknown) => datesSchema.parse(d))
   .handler(async (ctx) => {
     const { dates } = ctx.data;
 
