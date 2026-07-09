@@ -665,7 +665,10 @@ function HowItWorksSection() {
               <h3 className="mt-3 font-display text-xl text-brand-black">{t}</h3>
               <p className="mt-2 text-brand-neutral text-sm">{d}</p>
               {i < steps.length - 1 && (
-                <div className="hidden md:block absolute top-6 right-[-12px] text-brand-orange/60 text-2xl">
+                <div
+                  className="hidden md:block absolute top-6 text-brand-orange/60 text-2xl"
+                  style={{ right: -12 }}
+                >
                   →
                 </div>
               )}
