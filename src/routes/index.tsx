@@ -857,7 +857,7 @@ function Footer() {
         </div>
       </div>
       <div className="container-x mt-10 pt-6 border-t border-white/5 font-accent text-xs text-brand-neutral text-center">
-        © 2025 FramedFast. All rights reserved.
+        © {new Date().getFullYear()} FramedFast. All rights reserved.
       </div>
     </footer>
   );

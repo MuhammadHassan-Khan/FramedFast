@@ -76,20 +76,16 @@ export function BookingForm() {
             if (!isOpen) closed.add(date);
           }
           setClosedDays(closed);
-        } else {
-          console.warn("checkDatesOpen returned", result);
         }
       })
-      .catch((err) => console.error("checkDatesOpen failed", err));
+      .catch(() => {});
     getBookedSlots({ data: { dates: dateStrs } })
       .then((result) => {
         if (result && typeof result === "object" && !("error" in result)) {
           setBookedSlots(result as Record<string, string[]>);
-        } else {
-          console.warn("getBookedSlots returned", result);
         }
       })
-      .catch((err) => console.error("getBookedSlots failed", err));
+      .catch(() => {});
   }, [dateStrs]);
 
   useEffect(() => {
