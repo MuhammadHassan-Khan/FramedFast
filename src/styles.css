@@ -1,0 +1,185 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 12px;
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --color-brand-black: var(--brand-black);
+  --color-brand-orange: var(--brand-orange);
+  --color-brand-white: var(--brand-white);
+  --color-brand-neutral: var(--brand-neutral);
+  --color-brand-dark: var(--brand-dark);
+
+  --font-display: "Syne", sans-serif;
+  --font-body: "Inter", sans-serif;
+  --font-accent: "Space Grotesk", sans-serif;
+}
+
+:root {
+  --radius: 0.5rem;
+
+  /* Brand */
+  --brand-black: #000000;
+  --brand-orange: #FA680A;
+  --brand-white: #FEFEFE;
+  --brand-neutral: #948D88;
+  --brand-dark: #020202;
+
+  /* Semantic — light surface (FEFEFE base) */
+  --background: #FEFEFE;
+  --foreground: #000000;
+  --card: #FEFEFE;
+  --card-foreground: #000000;
+  --popover: #FEFEFE;
+  --popover-foreground: #000000;
+  --primary: #FA680A;
+  --primary-foreground: #000000;
+  --secondary: #f4f1ee;
+  --secondary-foreground: #000000;
+  --muted: #f4f1ee;
+  --muted-foreground: #948D88;
+  --accent: #FA680A;
+  --accent-foreground: #000000;
+  --destructive: #ef4444;
+  --destructive-foreground: #FEFEFE;
+  --border: #e7e3df;
+  --input: #e7e3df;
+  --ring: #FA680A;
+}
+
+@layer base {
+  * { border-color: var(--color-border); }
+  html { scroll-behavior: smooth; }
+  body {
+    background-color: var(--brand-white);
+    color: var(--brand-black);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  h1, h2, h3, h4 { font-family: var(--font-display); letter-spacing: -0.02em; }
+}
+
+@layer utilities {
+  .font-display { font-family: var(--font-display); }
+  .font-body { font-family: var(--font-body); }
+  .font-accent { font-family: var(--font-accent); }
+
+  .eyebrow {
+    font-family: var(--font-accent);
+    color: var(--brand-orange);
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    font-size: 0.78rem;
+    font-weight: 600;
+  }
+
+  /* Animated orange underline under pain words */
+  .pain-underline {
+    position: relative;
+    display: inline;
+    white-space: nowrap;
+  }
+  .pain-underline::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -0.1em;
+    height: 0.18em;
+    background: var(--brand-orange);
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform 700ms cubic-bezier(0.65, 0, 0.35, 1);
+  }
+  .pain-underline.is-visible::after { transform: scaleX(1); }
+
+  .btn-primary {
+    background: var(--brand-orange);
+    color: var(--brand-black);
+    font-family: var(--font-accent);
+    font-weight: 600;
+    border-radius: 4px;
+    padding: 0.95rem 1.6rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: transform 180ms ease, filter 180ms ease;
+  }
+  .btn-primary:hover { filter: brightness(1.08); transform: translateY(-1px); }
+  .btn-dark {
+    background: var(--brand-black);
+    color: var(--brand-white);
+    font-family: var(--font-accent);
+    font-weight: 600;
+    border-radius: 4px;
+    padding: 0.95rem 1.6rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: transform 180ms ease, filter 180ms ease;
+  }
+  .btn-dark:hover { filter: brightness(1.2); transform: translateY(-1px); }
+  .btn-ghost {
+    border: 1px solid var(--brand-orange);
+    color: var(--brand-white);
+    background: transparent;
+    font-family: var(--font-accent);
+    font-weight: 600;
+    border-radius: 4px;
+    padding: 0.85rem 1.4rem;
+  }
+
+  .container-x { max-width: 1200px; margin-inline: auto; padding-inline: 1.25rem; }
+
+  .scrollbar-thin::-webkit-scrollbar { height: 6px; }
+  .scrollbar-thin::-webkit-scrollbar-track { background: transparent; }
+  .scrollbar-thin::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.12); border-radius: 3px; }
+  .dark .scrollbar-thin::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.12); }
+
+  .scroll-auto { overflow: hidden !important; }
+  .scroll-auto:hover .scroll-track { animation-play-state: paused; }
+  .scroll-track { display: flex; width: max-content; }
+  .scroll-track-ltr { animation: scroll-ltr 40s linear infinite; }
+  .scroll-track-rtl { animation: scroll-rtl 40s linear infinite; }
+
+@keyframes scroll-ltr {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+@keyframes scroll-rtl {
+  0% { transform: translateX(-50%); }
+  100% { transform: translateX(0); }
+}
+
+  .grain {
+    background-image: radial-gradient(rgba(255,255,255,0.04) 1px, transparent 1px);
+    background-size: 3px 3px;
+  }
+}
